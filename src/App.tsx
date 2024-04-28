@@ -6,12 +6,11 @@ function App() {
     <TopContainer>      
         <Header>
           <HeaderList>
-            <li>How to Use</li>
-            <li>About</li>
+            <li>어떻게 사용하나요?</li>
+            <li>Twiroller에 대하여</li>
           </HeaderList>
           <ChangeBtn>야간모드</ChangeBtn>
         </Header>
-        <div>
           <Title>Twiroller</Title>
           <section>
             <HyperLinkArea/>
@@ -20,7 +19,6 @@ function App() {
               <ContentContainer>랄랄라</ContentContainer>
             </ContentSection>
           </section>
-      </div>
     </TopContainer>
   );
 }
@@ -30,8 +28,6 @@ const TopContainer = styled.section`
   background-color: aqua;
   width: 100%;
   height: 100vh;
-  display: flex;
-  justify-content: center;
 `
 
 
@@ -51,16 +47,29 @@ const ChangeBtn = styled.button`
 
 const Header = styled.header`
   width: 100%;
-  background-color: yellow;
-  height: 50px;
+  background-color: #2da4ff;
+  height: 60px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  color: #e4f2ff;
 `
 const HeaderList = styled.ul`
   display: flex;
   justify-content: space-between;
-  height: 50px;
-  text-align: center;
-  font-size: 30px;
+  width: 50%;
+  height: 60px;    
+  li {
+    font-weight: 600;
+    font-size: 23px;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    &:hover {
+    color: #ffffff;
+  }
+  }
 `
 
 const ContentSection = styled.section`
