@@ -1,12 +1,102 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/global-style.css';
+import styled from 'styled-components';
 
 function App() {
   return (
-    <div className="App">
-    </div>
+    <TopContainer>      
+        <Header>
+          <HeaderList>
+            <li>How to Use</li>
+            <li>About</li>
+          </HeaderList>
+          <ChangeBtn>야간모드</ChangeBtn>
+        </Header>
+        <div>
+          <Title>Twiroller</Title>
+          <section>
+            <HyperLinkArea/>
+            <CrawlingBtn>가져오기</CrawlingBtn>
+            <ContentSection>
+              <ContentContainer>랄랄라</ContentContainer>
+            </ContentSection>
+          </section>
+      </div>
+    </TopContainer>
   );
 }
-
 export default App;
+
+const TopContainer = styled.section`
+  background-color: aqua;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+`
+
+
+const Title = styled.h1`
+  font-size: 35px;
+  font-weight: 800;
+  margin: 2rem;
+`
+
+const ChangeBtn = styled.button`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+`
+
+const Header = styled.header`
+  width: 100%;
+  background-color: yellow;
+  height: 50px;
+  text-align: center;
+`
+const HeaderList = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  text-align: center;
+  font-size: 30px;
+`
+
+const ContentSection = styled.section`
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+`
+
+const ContentContainer = styled.div`
+  width: 80%;
+  background-color: aliceblue;
+  padding: 3rem;
+`
+
+const HyperLinkArea = styled.input`
+  width: 50%;
+  height: 25px;
+  border-radius: 10px;
+  margin-right: 1rem;
+  outline: none;
+  font-size: 17px;
+  font-family: inherit;
+  padding: 5px 10px;
+`
+const CrawlingBtn = styled.button`
+  width: 100px;
+  height: 40px;
+  font-size: 17px;
+  border-radius: 20px;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+  background-color: #2da4ff;
+  transition: all 0.2s ease;
+  color: #fff;
+  &:hover{
+    background-color: #76adff;
+  }
+`
