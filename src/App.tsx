@@ -13,30 +13,50 @@ function App() {
           </HeaderList>
           <ChangeBtn>야간모드</ChangeBtn>
         </Header>
-          <Title>Twiroller</Title>
-          <section>
-            <HyperLinkArea/>
-            <CrawlingBtn>가져오기</CrawlingBtn>
-            <ContentSection>
-              <ContentContainer>랄랄라</ContentContainer>
-            </ContentSection>
-          </section>
+          <TextSection>
+            <Title>Twiroller</Title>
+              <TextContainer>
+                  <SubmitSection>
+                    <HyperLinkInput/>
+                    <CrawlingBtn>가져오기</CrawlingBtn>
+                  </SubmitSection>         
+                <ContentSection>
+                  <ContentContainer>여기에 내용이 오게 됩니다.</ContentContainer>
+                </ContentSection>
+              </TextContainer>
+          </TextSection>
     </TopContainer>
   );
 }
 export default App;
 
+const TextContainer = styled.div`
+  width: 100%;
+`
+const SubmitSection = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const TextSection = styled.section`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
 const TopContainer = styled.section`
-  background-color: aqua;
   width: 100%;
   height: 100vh;
-`
+  `
 
 
 const Title = styled.h1`
   font-size: 35px;
   font-weight: 800;
   margin: 2rem;
+  color: #222;
 `
 
 const ChangeBtn = styled.button`
@@ -92,12 +112,13 @@ const ContentContainer = styled.div`
   padding: 3rem;
 `
 
-const HyperLinkArea = styled.input`
+const HyperLinkInput = styled.input`
   width: 50%;
   height: 25px;
   border-radius: 10px;
   margin-right: 1rem;
   outline: none;
+  border: 1px solid #1D9BF0;
   font-size: 17px;
   font-family: inherit;
   padding: 5px 10px;
@@ -110,6 +131,7 @@ const CrawlingBtn = styled.button`
   font-weight: 700;
   outline: none;
   cursor: pointer;
+  border: none;
   background-color: #1D9BF0;
   transition: all 0.2s ease;
   color: #fff;
