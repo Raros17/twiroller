@@ -1,6 +1,7 @@
 import './styles/global-style.css';
 import styled from 'styled-components';
 import fetchData from './components/fetchData';
+import { CiDark } from "react-icons/ci";
 
 function App() {
   fetchData();
@@ -11,17 +12,18 @@ function App() {
             <li>간단 설명서</li>
             <li>Twiroller에 대하여</li>
           </HeaderList>
-          <ChangeBtn>야간모드</ChangeBtn>
+          <ThemeBtn><CiDark /></ThemeBtn>
         </Header>
           <TextSection>
             <Title>Twiroller</Title>
+            <InfoText>본문을 추출할 트윗 주소를 입력해주세요.</InfoText>
               <TextContainer>
                   <SubmitSection>
                     <HyperLinkInput/>
-                    <CrawlingBtn>가져오기</CrawlingBtn>
+                    <CrawlingBtn>추출하기</CrawlingBtn>
                   </SubmitSection>         
                 <ContentSection>
-                  <ContentContainer>여기에 내용이 오게 됩니다.</ContentContainer>
+                  <ContentContainer>현재는 비어 있습니다!</ContentContainer>
                 </ContentSection>
               </TextContainer>
           </TextSection>
@@ -29,6 +31,13 @@ function App() {
   );
 }
 export default App;
+
+const InfoText = styled.h4`
+  font-size: 18px;
+  margin-bottom: 1rem;
+  color: #222;
+  font-weight: 600;
+`
 
 const TextContainer = styled.div`
   width: 100%;
@@ -40,10 +49,10 @@ const SubmitSection = styled.div`
 
 const TextSection = styled.section`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 60px;
 `
 
 const TopContainer = styled.section`
@@ -59,14 +68,17 @@ const Title = styled.h1`
   color: #222;
 `
 
-const ChangeBtn = styled.button`
+const ThemeBtn = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  border: 1px solid #fff;
   margin-top: 5px;;
   position: absolute;
   right: 10px;
+  color: #1D9BF0;;
   cursor: pointer;
+  font-size: 35px;
   background-color: #fff;
   &:hover{
     background-color: #eeeeee;
@@ -81,6 +93,7 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   color: #e4f2ff;
+  position: absolute;
 `
 const HeaderList = styled.ul`
   display: flex;
@@ -110,6 +123,10 @@ const ContentContainer = styled.div`
   width: 80%;
   background-color: aliceblue;
   padding: 3rem;
+  font-size: 18px;
+  color: #222;
+  font-weight: 500;
+  border-radius: 10px;
 `
 
 const HyperLinkInput = styled.input`
