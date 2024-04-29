@@ -1,12 +1,14 @@
 import './styles/global-style.css';
 import styled from 'styled-components';
+import fetchData from './components/fetchData';
 
 function App() {
+  fetchData();
   return (
     <TopContainer>      
         <Header>
           <HeaderList>
-            <li>어떻게 사용하나요?</li>
+            <li>간단 설명서</li>
             <li>Twiroller에 대하여</li>
           </HeaderList>
           <ChangeBtn>야간모드</ChangeBtn>
@@ -41,13 +43,19 @@ const ChangeBtn = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  margin-top: 5px;;
   position: absolute;
-  right: 0;
+  right: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  &:hover{
+    background-color: #eeeeee;
+  }
 `
 
 const Header = styled.header`
   width: 100%;
-  background-color: #2da4ff;
+  background-color: #1D9BF0;
   height: 60px;
   text-align: center;
   display: flex;
@@ -102,10 +110,11 @@ const CrawlingBtn = styled.button`
   font-weight: 700;
   outline: none;
   cursor: pointer;
-  background-color: #2da4ff;
+  background-color: #1D9BF0;
   transition: all 0.2s ease;
   color: #fff;
+  cursor: pointer;
   &:hover{
-    background-color: #76adff;
+    background-color: #4089f7;;
   }
 `
