@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import fetchData from './components/fetchData';
 import { CiDark } from "react-icons/ci";
 import { useState, useRef } from 'react';
+import Footer from './components/Footer';
 
 function App() {
   const urlInput = useRef<HTMLInputElement>(null);
@@ -47,6 +48,7 @@ function App() {
                 </ContentSection>
               </TextContainer>
           </TextSection>
+          <Footer/>
     </TopContainer>
   );
 }
