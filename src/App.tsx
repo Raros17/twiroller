@@ -4,22 +4,48 @@ import fetchData from './components/fetchData';
 import { CiDark } from "react-icons/ci";
 import { useState, useRef } from 'react';
 import Footer from './components/Footer';
+import puppeteer from "puppeteer-core";
 
 function App() {
   const urlInput = useRef<HTMLInputElement>(null);
   const [fetchUrl, setFetchUrl]= useState('');
+  
+const url = 'https://example.com'; // 크롤링할 웹페이지 URL
 
-  //console.log(fetchUrl)
-  //후에 이 url을 fetchData 쪽으로 보내서 검색하게 시킴.
+// async function fetchDataFromUrl(url:string){
+//   const browser = await puppeteer.launch();
+//   const page = await browser.newPage();
 
-  function handleFetchUrl(){
-    //나중에 띄어쓰기 없애는 로직 짜기
-    if (urlInput.current) {
-      setFetchUrl(urlInput.current.value); 
-    }
-    }
+//   await page.goto(url, { waitUntil: 'networkidle2' });
+//   const content = await page.evaluate(() => {
+//     // 여기서는 페이지에서 특정 텍스트를 가져오거나, 요소의 내용을 추출합니다.
+//     const element = document.querySelector('span'); // 예시 선택자
+//     return element ? element.innerText : '데이터를 찾을 수 없습니다.';
+//   });
+//   await browser.close();
+//   console.log(content)
+//   return content;
+// }
 
-  fetchData();
+
+// fetchDataFromUrl(url)
+//   .then((data) => {
+//     console.log('Fetched Data:', data);
+//   })
+//   .catch((error) => {
+//     console.error('Error fetching data:', error);
+//   });
+
+
+  //후에 fetchUrl을 fetchData 쪽으로 보내서 검색하게 시킴.
+  // function handleFetchUrl(){
+  //   //나중에 띄어쓰기 없애는 로직 짜기
+  //   if (urlInput.current) {
+  //     setFetchUrl(urlInput.current.value); 
+  //   }
+  //   }
+
+  // fetchData();
   return (
     <TopContainer>      
         <Header>
@@ -35,7 +61,7 @@ function App() {
               <TextContainer>
                   <SubmitSection>
                     <HyperLinkInput type='text' ref={urlInput}/>
-                    <CrawlingBtn onClick={handleFetchUrl}>추출하기</CrawlingBtn>
+                    <CrawlingBtn >추출하기</CrawlingBtn>
                   </SubmitSection>         
                 <ContentSection>
                   <ContentContainer>밤은 어둠의 망토를 덮으며 도시를 조용히 삼켰다. 높은 빌딩들 사이로 희미한 빛이 반짝였지만, 그 아래의 거리들은 고요했다. 이곳은 잃어버린 꿈들이 떠도는 곳, 인간의 희망이 밤의 그림자 속에서 힘을 잃는 곳이었다.
@@ -63,6 +89,7 @@ const InfoText = styled.h4`
 
 const TextContainer = styled.div`
   width: 100%;
+  position: relative;  
 `
 const SubmitSection = styled.div`
   display: flex;
