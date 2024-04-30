@@ -1,16 +1,20 @@
 const express = require('express');
-const { crawls } = require('./scripts/crawler');
+//const { crawls } = require('./scripts/crawler');
+
 const app = express();
-const PORT = 3008;
+const PORT = 8080;
+
+
 
 app.get('/crawl', async (req, res) => {
-    try {
-        const data = await crawls(); // 크롤링 실행
-        res.json({ data }); // JSON 형식으로 응답
-      } catch (err) {
-        console.error("Error during crawling:", err); // 오류 로깅
-        res.status(500).json({ error: err.message }); // 오류 응답
-      }
+    res.send('냐앙')
+    // try {
+    //     const data = await crawls(); // 크롤링 실행
+    //     res.json({ data }); // JSON 형식으로 응답
+    //   } catch (err) {
+    //     console.error("Error during crawling:", err); // 오류 로깅
+    //     res.status(500).json({ error: err.message }); // 오류 응답
+    //   }
 });
 
 app.listen(PORT, () => {

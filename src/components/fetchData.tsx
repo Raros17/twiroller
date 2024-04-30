@@ -1,9 +1,7 @@
 import axios from "axios";
-import { Cheerio} from "cheerio";
-
 async function fetchData(){
     try {
-    const url="http://localhost:3000/twitter/09queen04/status/1784948172990886199"
+    const url="http://localhost:3000/naver.com/"
     const response = await axios.get(url);
     const html = response.data;
     console.log(html)
@@ -12,3 +10,4 @@ async function fetchData(){
     }
 }
 export default fetchData;
+//http://localhost:3000/twitter/09queen04/status/1784948172990886199

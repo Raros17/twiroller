@@ -38,14 +38,14 @@ const url = 'https://example.com'; // 크롤링할 웹페이지 URL
 
 
   //후에 fetchUrl을 fetchData 쪽으로 보내서 검색하게 시킴.
-  // function handleFetchUrl(){
-  //   //나중에 띄어쓰기 없애는 로직 짜기
-  //   if (urlInput.current) {
-  //     setFetchUrl(urlInput.current.value); 
-  //   }
-  //   }
+  function handleFetchUrl(){
+    //나중에 띄어쓰기 없애는 로직 짜기
+    if (urlInput.current) {
+      setFetchUrl(urlInput.current.value); 
+    }
+    }
 
-  // fetchData();
+  fetchData();
   return (
     <TopContainer>      
         <Header>
