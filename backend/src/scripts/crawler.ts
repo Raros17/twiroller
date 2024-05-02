@@ -1,17 +1,20 @@
 // crawler.ts
 import puppeteer from 'puppeteer';
 
+const launchOptions = {
+  headless: true,  // 브라우저를 숨김 모드로 실행
+  args: ['--no-sandbox', '--disable-setuid-sandbox']  // 실행 옵션
+};
+
 export async function crawls() {
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch(launchOptions);
     const page = await browser.newPage();
-    
-    // 크롤링할 웹사이트로 이동
     await page.goto('https://www.naver.com/'); 
     
     // 원하는 데이터를 추출
     const data = await page.evaluate(() => {
-      const element = document.querySelector('.MediaContentsView-module__info_title___vdgEM');
+      const element = document.querySelector('div');
       return element ? element.textContent : 'Element not found'; // 요소의 텍스트 반환
     });
 

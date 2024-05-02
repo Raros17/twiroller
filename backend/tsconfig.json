@@ -5,6 +5,7 @@
       "outDir": "./dist",  // 컴파일 결과물이 생성될 폴더
       "rootDir": "./src",
       "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
       "strict": true,
       "moduleResolution": "node",
     },

@@ -1,9 +1,10 @@
-import { crawls } from './scripts/crawler';
+import  {crawls}  from './scripts/crawler.js';
 import express from 'express';
 
 const app = express();
 const PORT = 8080;
 
+crawls();
 app.get('/', (req, res) => {
     res.send('hello!');
 });
