@@ -7,18 +7,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+// crawler.ts
 import puppeteer from 'puppeteer';
 export function crawls() {
     return __awaiter(this, void 0, void 0, function* () {
-        const browser = yield puppeteer.launch();
-        const page = yield browser.newPage();
-        yield page.goto('https://www.naver.com/'); // 크롤링할 사이트
-        const data = yield page.evaluate(() => {
-            const element = document.querySelector('.MediaContentsView-module__info_title___vdgEM');
-            return element ? element.textContent : 'Element not found'; // 요소가 있으면 텍스트 반환, 없으면 메시지 반환
-        });
-        yield browser.close();
-        console.log("Crawled data:", data);
-        return data;
+        try {
+            const browser = yield puppeteer.launch();
+            const page = yield browser.newPage();
+            // 크롤링할 웹사이트로 이동
+            yield page.goto('https://www.naver.com/');
+            // 원하는 데이터를 추출
+            const data = yield page.evaluate(() => {
+                const element = document.querySelector('.MediaContentsView-module__info_title___vdgEM');
+                return element ? element.textContent : 'Element not found'; // 요소의 텍스트 반환
+            });
+            yield browser.close(); // 브라우저 종료
+            console.log('Crawled data:', data); // 크롤링된 데이터 콘솔 출력
+            return data; // 추출한 데이터를 반환
+        }
+        catch (error) {
+            console.error('Error during crawling:', error); // 크롤링 중 에러 처리
+            throw error; // 에러 발생 시 예외 발생
+        }
     });
 }

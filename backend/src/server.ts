@@ -1,4 +1,4 @@
-import {crawls} from './scripts/crawler';
+import { crawls } from './scripts/crawler';
 import express from 'express';
 
 const app = express();
@@ -9,7 +9,13 @@ app.get('/', (req, res) => {
 });
 
 app.get('/crawl', async (req, res) => {
-  res.send('냐앙');
+  // try {
+  //   const data = await crawls(); // Puppeteer로 크롤링한 데이터
+  //   res.json({ crawledData: data }); // JSON 형식으로 응답
+  // } catch (error) {
+  //   console.error('Error during crawling:', error);
+  //   res.status(500).json({ error: 'Failed to crawl data' });
+  // }
 });
 
 app.listen(PORT, () => {
