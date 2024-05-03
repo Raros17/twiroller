@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // crawler.ts
 import puppeteer from 'puppeteer';
 const launchOptions = {
-    headless: true, // 브라우저를 숨김 모드로 실행
+    //headless: true,  // 브라우저를 숨김 모드로 실행
     args: ['--no-sandbox', '--disable-setuid-sandbox'] // 실행 옵션
 };
 export function crawls() {
@@ -18,10 +18,12 @@ export function crawls() {
         try {
             const browser = yield puppeteer.launch(launchOptions);
             const page = yield browser.newPage();
-            yield page.goto('https://www.naver.com/');
+            yield page.goto('https://twitter.com/?lang=ko/login');
+            // await page.waitForSelector('a[data-testid="loginButton"]');
+            // await page.click('a[data-testid="loginButton"]');
             // 원하는 데이터를 추출
             const data = yield page.evaluate(() => {
-                const element = document.querySelector('div');
+                const element = document.querySelector('span');
                 return element ? element.textContent : 'Element not found'; // 요소의 텍스트 반환
             });
             yield browser.close(); // 브라우저 종료

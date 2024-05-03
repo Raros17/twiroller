@@ -10,6 +10,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/crawl', async (req, res) => {
+  res.send('hello2!');
   // try {
   //   const data = await crawls(); // Puppeteer로 크롤링한 데이터
   //   res.json({ crawledData: data }); // JSON 형식으로 응답
