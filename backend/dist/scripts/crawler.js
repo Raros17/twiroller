@@ -18,17 +18,31 @@ export function crawls() {
         try {
             const browser = yield puppeteer.launch(launchOptions);
             const page = yield browser.newPage();
-            yield page.goto('https://twitter.com/?lang=ko/login');
+            const twitter_id = "트위터 아이디";
+            const twitter_pw = "트위터 패스워드";
+            yield page.goto('https://twitter.com/?lang=ko/i/flow/login');
+            yield page.evaluate((id, pw) => {
+                document.querySelector('#id').value = id;
+                document.querySelector('#pw').value = pw;
+            }, twitter_id, twitter_pw);
+            yield page.click('.버튼');
+            yield page.waitForNavigation();
+            yield page.goto('받아온 주소 여기');
+            yield page.evaluate(() => {
+                const element = document.querySelector('span');
+                return element ? element.textContent : 'Element not found';
+            });
             // await page.waitForSelector('a[data-testid="loginButton"]');
             // await page.click('a[data-testid="loginButton"]');
+            console.log('제대로 접근했습니다.');
             // 원하는 데이터를 추출
-            const data = yield page.evaluate(() => {
-                const element = document.querySelector('span');
-                return element ? element.textContent : 'Element not found'; // 요소의 텍스트 반환
-            });
+            // const data = await page.evaluate(() => {
+            //   const element = document.querySelector('span');
+            //   return element ? element.textContent : 'Element not found'; // 요소의 텍스트 반환
+            // });
             yield browser.close(); // 브라우저 종료
-            console.log('Crawled data:', data); // 크롤링된 데이터 콘솔 출력
-            return data; // 추출한 데이터를 반환
+            //console.log('Crawled data:', data); // 크롤링된 데이터 콘솔 출력
+            //return data; // 추출한 데이터를 반환
         }
         catch (error) {
             console.error('Error during crawling:', error); // 크롤링 중 에러 처리
