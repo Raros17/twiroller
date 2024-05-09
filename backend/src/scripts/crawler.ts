@@ -11,10 +11,22 @@ export async function crawls() {
   const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
 
-   await page.goto('https://twitter.com/inleminati/status/1337617776144334849',{
+   await page.goto('https://twitter.com/artroverco/status/1785967634116427905',{
     waitUntil: 'networkidle2', //해당 항목 추가하여 페이지 로딩이 완료될 때까지 기다린다.
     //networkidle2는 모든 네트워크 요청이 완료되기까지 대기하는 옵션.
    });
+
+   const imgSrcs = await page.evaluate(()=>{
+    const photoDivs = document.querySelectorAll('div[data-testid="tweetPhoto"]');
+    const srcList:string[] = [];
+    photoDivs.forEach((div)=>{
+      const img = div.querySelector('img');
+      if (img&&img.src){
+        srcList.push(img.src);
+      } 
+    })
+    return srcList; 
+   })
 
    const spanText = await page.evaluate(()=>{
     const tweetDiv = document.querySelector('div[data-testid="tweetText"]');
@@ -24,11 +36,11 @@ export async function crawls() {
     const spans = tweetDiv.querySelectorAll('span.css-1qaijid.r-bcqeeo.r-qvutc0.r-poiln3')
     return Array.from(spans).map((span) => span.textContent);
    })     
-   console.log('Extracted Text:', spanText);
+   console.log('Extracted Text:', spanText, imgSrcs);
    //await browser.close()
    return spanText;
 } catch(error){
-  console.error('Error during crawling:', error); // 크롤링 중 에러 처리
+  console.error('Error during crawling:', error); 
   throw error; 
   }
 }
