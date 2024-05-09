@@ -7,11 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { crawls } from './scripts/crawler.js';
+import { loginAcceptCrawler } from './scripts/loginAcceptCrawler.js';
 import express from 'express';
 const app = express();
 const PORT = 8080;
-crawls();
+loginAcceptCrawler();
+//tweetCrawler();
 app.get('/', (req, res) => {
     res.send('hello!');
 });

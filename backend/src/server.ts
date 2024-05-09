@@ -1,10 +1,12 @@
-import  {crawls}  from './scripts/crawler.js';
+import  {tweetCrawler}  from './scripts/tweeetCrawler.js';
+import { loginAcceptCrawler } from './scripts/loginAcceptCrawler.js';
 import express from 'express';
 
 const app = express();
 const PORT = 8080;
 
-crawls();
+loginAcceptCrawler();
+//tweetCrawler();
 app.get('/', (req, res) => {
     res.send('hello!');
 });

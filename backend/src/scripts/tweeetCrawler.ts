@@ -6,7 +6,7 @@ const launchOptions = {
   args: ['--no-sandbox', '--disable-setuid-sandbox']  // 실행 옵션
 };
 
-export async function crawls() {
+export async function tweetCrawler() {
   try {
   const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
