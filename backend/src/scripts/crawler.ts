@@ -31,7 +31,7 @@ export async function crawls() {
     return Array.from(divs).map((div) => div.textContent);  // 텍스트 콘텐츠 추출
   });
   console.log(divContents)
-    
+     
   //   // await page.waitForSelector('a[data-testid="loginButton"]');
   //   // await page.click('a[data-testid="loginButton"]');
   //   console.log('제대로 접근했습니다.')
