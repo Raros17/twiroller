@@ -19,32 +19,17 @@ export function crawls() {
         try {
             const browser = yield puppeteer.launch(launchOptions);
             const page = yield browser.newPage();
-            //   // const twitter_id = "트위터 아이디";
-            //   // const twitter_pw = "트위터 패스워드";
-            yield page.goto('https://twitter.com/i/flow/login');
-            yield page.screenshot({ path: 'example.png' });
-            //   // await page.evaluate((id, pw)=>{
-            //   //   // document.querySelector('#id').value= id;
-            //   //   // document.querySelector('#pw').value = pw;
-            //   // }, twitter_id, twitter_pw);
-            //   // await page.click('.버튼');
-            //   // await page.waitForNavigation();
-            //   // await page.goto('받아온 주소 여기');
-            //   await page.evaluate(()=>{
-            //     const element = document.querySelector('span');
-            //     return element ? element.textContent : 'Element not found';
-            //   })
-            const divContents = yield page.evaluate(() => {
-                const divs = document.querySelectorAll('button'); // 모든 div 요소 선택
-                return Array.from(divs).map((div) => div.textContent); // 텍스트 콘텐츠 추출
+            yield page.goto('https://twitter.com/1139pm/status/1788177999667626407', {
+                waitUntil: 'networkidle2', //해당 항목 추가하여 페이지 로딩이 완료될 때까지 기다린다.
+                //networkidle2는 모든 네트워크 요청이 완료되기까지 대기하는 옵션.
             });
-            console.log(divContents);
-            //   // await page.waitForSelector('a[data-testid="loginButton"]');
-            //   // await page.click('a[data-testid="loginButton"]');
-            //   console.log('제대로 접근했습니다.')
-            //await browser.close(); // 브라우저 종료
-            //   //console.log('Crawled data:', data); // 크롤링된 데이터 콘솔 출력
-            return divContents;
+            const spanText = yield page.evaluate(() => {
+                const spans = document.querySelectorAll('span.css-1qaijid.r-bcqeeo.r-qvutc0.r-poiln3');
+                return Array.from(spans).map((span) => span.textContent);
+            });
+            console.log('Extracted Text:', spanText);
+            //await browser.close()
+            return spanText;
         }
         catch (error) {
             console.error('Error during crawling:', error); // 크롤링 중 에러 처리
