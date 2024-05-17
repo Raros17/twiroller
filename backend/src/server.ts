@@ -1,9 +1,12 @@
 import  {tweetCrawler}  from './scripts/tweetCrawler.js';
 import { loginAcceptCrawler } from './scripts/loginAcceptCrawler.js';
 import express from 'express';
+import cors from 'cors';
 
 const app = express();
 const PORT = 8080;
+
+app.use(cors());
 
 //loginAcceptCrawler();
 tweetCrawler();
