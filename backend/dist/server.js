@@ -10,22 +10,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { tweetCrawler } from './scripts/tweetCrawler.js';
 import express from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 const app = express();
 const PORT = 8080;
 app.use(cors());
-//loginAcceptCrawler();
-tweetCrawler();
+app.use(bodyParser.json());
+let crawledData = null;
 app.get('/', (req, res) => {
     res.send('hello!');
 });
-app.get('/crawl', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/url', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const url = req.body.url;
+    console.log('Received URL:', url);
     try {
-        const data = yield tweetCrawler();
+        const data = yield tweetCrawler(url);
         res.json({ nonLoginAccessData: data });
     }
     catch (error) {
-        console.error('Error during Crawling:', error);
-        res.status(500).json({ error: 'Failed to Crawl Data.' });
+        console.error('Error in tweetCrawler:', error);
+        res.status(500).json({ error: 'Failed to crawl data' });
+    }
+}));
+app.get('/crawl', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (crawledData) {
+        res.json({ nonLoginAccessData: crawledData });
+    }
+    else {
+        res.status(500).json({ error: 'No crawled Data available!' });
     }
 }));
 app.listen(PORT, () => {
