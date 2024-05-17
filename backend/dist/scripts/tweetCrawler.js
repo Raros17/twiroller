@@ -43,9 +43,9 @@ export function tweetCrawler() {
                 const spans = tweetDiv.querySelectorAll('span');
                 return Array.from(spans).map((span) => span.textContent);
             });
-            console.log('Extracted Text:', spanText, imgSrcs);
-            //await browser.close()
-            return spanText;
+            yield browser.close();
+            return { text: spanText, images: imgSrcs };
+            //console.log('Extracted Text:', spanText, imgSrcs);
         }
         catch (error) {
             console.error('Error during crawling:', error);
