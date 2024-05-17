@@ -1,6 +1,5 @@
 import './styles/global-style.css';
 import styled from 'styled-components';
-import fetchData from './components/fetchData';
 import { CiDark } from "react-icons/ci";
 import { useState, useRef } from 'react';
 import Footer from './components/Footer';
@@ -12,9 +11,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  const url = 'http://localhost:8080/crawl'; // 크롤링할 웹페이지 URL
-
-async function fetchDataFromUrl(url:string){
+  async function fetchDataFromUrl(url:string){
   setIsLoading(true);
   setError(null);
   try {
@@ -33,13 +30,28 @@ async function fetchDataFromUrl(url:string){
 }
   //후에 fetchUrl을 fetchData 쪽으로 보내서 검색하게 시킴.
 
-  function handleFetchUrl(){
-    //나중에 띄어쓰기 없애는 로직 짜기
-    fetchDataFromUrl('http://localhost:8080/crawl');
-    if (urlInput.current) {
-      setFetchUrl(urlInput.current.value); 
+  async function handleFetchUrl(){
+        const urlInputData = urlInput.current?.value;
+        console.log(urlInputData)
+        if(!urlInputData) return;
+        try {
+          const response = await fetch('http://localhost:8080/url', {
+            method: 'POST',
+            headers: {
+              'Content-Type' : 'application/json'
+            } , 
+            body: JSON.stringify({urlInputData})
+          })
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const responseData = await response.json();
+        console.log('Server response:', responseData);
+      } catch (error) {
+        console.error('Error sending URL data:', error);
+      }
     }
-    }
+
   return (
     <TopContainer>      
         <Header>
@@ -62,13 +74,11 @@ async function fetchDataFromUrl(url:string){
                   {fetchedData ? (
                 <>
                   <div>
-                    <h3>Text Content</h3>
                     {fetchedData.text.map((text, index) => (
                       <p key={index}>{text}</p>
                     ))}
                   </div>
                   <div>
-                    <h3>Image Content</h3>
                     {fetchedData.images.map((src, index) => (
                       <img key={index} src={src} alt={`tweet-img-${index}`} />
                     ))}

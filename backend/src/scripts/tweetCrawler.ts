@@ -10,7 +10,7 @@ export async function tweetCrawler() {
   const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
 
-   await page.goto('https://x.com/uglykogepan/status/1789873862412218730',{
+   await page.goto('https://x.com/catshouldnt/status/1791135930168070544',{
     waitUntil: 'networkidle2', //해당 항목 추가하여 페이지 로딩이 완료될 때까지 기다린다.
     //networkidle2는 모든 네트워크 요청이 완료되기까지 대기하는 옵션.
    });
