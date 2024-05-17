@@ -25,7 +25,6 @@ function App() {
     setIsLoading(false);
   }
 }
-  //후에 fetchUrl을 fetchData 쪽으로 보내서 검색하게 시킴.
 
   async function handleFetchUrl(){
         const urlInputData = urlInput.current?.value;

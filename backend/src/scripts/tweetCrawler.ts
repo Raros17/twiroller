@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 
 const launchOptions = {
   headless: false,  
-  args: ['--no-sandbox', '--disable-setuid-sandbox']  // 실행 옵션
+  args: ['--no-sandbox', '--disable-setuid-sandbox']  
 };
 
 export async function tweetCrawler(url:string) {
@@ -11,8 +11,7 @@ export async function tweetCrawler(url:string) {
   const page = await browser.newPage();
 
    await page.goto(url,{
-    waitUntil: 'networkidle2', //해당 항목 추가하여 페이지 로딩이 완료될 때까지 기다린다.
-    //networkidle2는 모든 네트워크 요청이 완료되기까지 대기하는 옵션.
+    waitUntil: 'networkidle2', 
    });
 
    await page.waitForSelector('div[data-testid="tweetPhoto"] img', { timeout: 60000 });
@@ -41,7 +40,7 @@ export async function tweetCrawler(url:string) {
       return [];
     };
     const spans = tweetDiv.querySelectorAll('span');
-    return Array.from(spans).map((span) => span.textContent);
+    return Array.from(spans).map((span) => span.textContent).filter((text): text is string => text !== null); ;
    })     
    await browser.close();
    console.log('Extracted Text:', spanText, imgSrcs);

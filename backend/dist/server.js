@@ -24,6 +24,7 @@ app.post('/url', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('Received URL:', url);
     try {
         const data = yield tweetCrawler(url);
+        crawledData = data;
         res.json({ nonLoginAccessData: data });
     }
     catch (error) {
