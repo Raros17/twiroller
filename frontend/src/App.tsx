@@ -6,14 +6,12 @@ import Footer from './components/Footer';
 
 function App() {
   const urlInput = useRef<HTMLInputElement>(null);
-  const [fetchUrl, setFetchUrl]= useState('');
   const [fetchedData, setFetchedData ] = useState<{ text: string[], images: string[] }|null>(null)
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   
-  async function fetchDataFromUrl(url:string){
+  async function fetchDataFromUrl(){
   setIsLoading(true);
-  setError(null);
+  const url = 'http://localhost:8080/crawl';
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -21,9 +19,8 @@ function App() {
     }
     const data = await response.json();
     setFetchedData(data.nonLoginAccessData)
-  }catch (error) {
+  } catch (error) {
     console.error('Error fetching data:', error);
-    setError('데이터를 가져오는 중 오류가 발생했습니다.');
   } finally {
     setIsLoading(false);
   }
@@ -32,23 +29,27 @@ function App() {
 
   async function handleFetchUrl(){
         const urlInputData = urlInput.current?.value;
-        console.log(urlInputData)
         if(!urlInputData) return;
+        setIsLoading(true);
+
         try {
           const response = await fetch('http://localhost:8080/url', {
             method: 'POST',
             headers: {
               'Content-Type' : 'application/json'
             } , 
-            body: JSON.stringify({urlInputData})
+            body: JSON.stringify({url: urlInputData})
           })
+
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-          const responseData = await response.json();
-        console.log('Server response:', responseData);
+          console.log('URL successfully sent to server');        
+          await fetchDataFromUrl();
       } catch (error) {
         console.error('Error sending URL data:', error);
+      } finally{
+        setIsLoading(false)
       }
     }
 
