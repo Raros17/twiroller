@@ -37,7 +37,7 @@ export function tweetCrawler() {
             const spanText = yield page.evaluate(() => {
                 const tweetDiv = document.querySelector('div[data-testid="tweetText"]');
                 if (!tweetDiv) {
-                    return "hey";
+                    return [];
                 }
                 ;
                 const spans = tweetDiv.querySelectorAll('span');

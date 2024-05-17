@@ -1,4 +1,3 @@
-// crawler.ts
 import puppeteer from 'puppeteer';
 
 const launchOptions = {
@@ -11,10 +10,12 @@ export async function tweetCrawler() {
   const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
 
-   await page.goto('https://twitter.com/artroverco/status/1785967634116427905',{
+   await page.goto('https://x.com/uglykogepan/status/1789873862412218730',{
     waitUntil: 'networkidle2', //해당 항목 추가하여 페이지 로딩이 완료될 때까지 기다린다.
     //networkidle2는 모든 네트워크 요청이 완료되기까지 대기하는 옵션.
    });
+
+   await page.waitForSelector('div[data-testid="tweetPhoto"] img');
 
    const imgSrcs = await page.evaluate(()=>{
     const photoDivs = document.querySelectorAll('div[data-testid="tweetPhoto"]');
@@ -28,14 +29,17 @@ export async function tweetCrawler() {
     return srcList; 
    })
 
+   await page.waitForSelector('div[data-testid="tweetText"]');
    const spanText = await page.evaluate(()=>{
     const tweetDiv = document.querySelector('div[data-testid="tweetText"]');
+
     if(!tweetDiv){
-      return []
+      return [];
     };
-    const spans = tweetDiv.querySelectorAll('span.css-1qaijid.r-bcqeeo.r-qvutc0.r-poiln3')
+    const spans = tweetDiv.querySelectorAll('span');
     return Array.from(spans).map((span) => span.textContent);
    })     
+
    console.log('Extracted Text:', spanText, imgSrcs);
    //await browser.close()
    return spanText;
