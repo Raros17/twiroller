@@ -9,8 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { tweetCrawler } from './scripts/tweetCrawler.js';
 import express from 'express';
+import cors from 'cors';
 const app = express();
 const PORT = 8080;
+app.use(cors());
 //loginAcceptCrawler();
 tweetCrawler();
 app.get('/', (req, res) => {

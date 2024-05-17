@@ -8,43 +8,38 @@ import Footer from './components/Footer';
 function App() {
   const urlInput = useRef<HTMLInputElement>(null);
   const [fetchUrl, setFetchUrl]= useState('');
+  const [fetchedData, setFetchedData ] = useState<{ text: string[], images: string[] }|null>(null)
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   
-const url = 'https://example.com'; // 크롤링할 웹페이지 URL
+  const url = 'http://localhost:8080/crawl'; // 크롤링할 웹페이지 URL
 
-// async function fetchDataFromUrl(url:string){
-//   const browser = await puppeteer.launch();
-//   const page = await browser.newPage();
-
-//   await page.goto(url, { waitUntil: 'networkidle2' });
-//   const content = await page.evaluate(() => {
-//     // 여기서는 페이지에서 특정 텍스트를 가져오거나, 요소의 내용을 추출합니다.
-//     const element = document.querySelector('span'); // 예시 선택자
-//     return element ? element.innerText : '데이터를 찾을 수 없습니다.';
-//   });
-//   await browser.close();
-//   console.log(content)
-//   return content;
-// }
-
-
-// fetchDataFromUrl(url)
-//   .then((data) => {
-//     console.log('Fetched Data:', data);
-//   })
-//   .catch((error) => {
-//     console.error('Error fetching data:', error);
-//   });
-
-
+async function fetchDataFromUrl(url:string){
+  setIsLoading(true);
+  setError(null);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    setFetchedData(data.nonLoginAccessData)
+  }catch (error) {
+    console.error('Error fetching data:', error);
+    setError('데이터를 가져오는 중 오류가 발생했습니다.');
+  } finally {
+    setIsLoading(false);
+  }
+}
   //후에 fetchUrl을 fetchData 쪽으로 보내서 검색하게 시킴.
+
   function handleFetchUrl(){
     //나중에 띄어쓰기 없애는 로직 짜기
+    fetchDataFromUrl('http://localhost:8080/crawl');
     if (urlInput.current) {
       setFetchUrl(urlInput.current.value); 
     }
     }
-
-  fetchData();
   return (
     <TopContainer>      
         <Header>
@@ -60,17 +55,30 @@ const url = 'https://example.com'; // 크롤링할 웹페이지 URL
               <TextContainer>
                   <SubmitSection>
                     <HyperLinkInput type='text' ref={urlInput}/>
-                    <CrawlingBtn >추출하기</CrawlingBtn>
+                    <CrawlingBtn onClick={handleFetchUrl}>추출하기</CrawlingBtn>
                   </SubmitSection>         
                 <ContentSection>
-                  <ContentContainer>밤은 어둠의 망토를 덮으며 도시를 조용히 삼켰다. 높은 빌딩들 사이로 희미한 빛이 반짝였지만, 그 아래의 거리들은 고요했다. 이곳은 잃어버린 꿈들이 떠도는 곳, 인간의 희망이 밤의 그림자 속에서 힘을 잃는 곳이었다.
-
-제이크는 그런 도시의 어두운 구석에 자리 잡고 있었다. 그는 여느 때와 마찬가지로 지하 주차장의 벽에 기대어 앉아, 낡은 카세트 플레이어에서 흐르는 재즈 음악을 들었다. 그의 손에는 오래된 사진 한 장이 쥐어져 있었다. 사진 속의 여인은 미소를 짓고 있었지만, 제이크는 그 미소 뒤에 감춰진 슬픔을 알고 있었다. 그녀는 그의 삶에 있어서 유일한 빛이었지만, 그 빛은 오래 전에 사라져버렸다.
-
-그는 한숨을 쉬며, 담배를 입에 물었다. 이 도시에서 살아남기 위해서는 강해져야 했다. 그러나 그는 이미 너무 많은 것을 잃었고, 그 잃어버린 것들이 그의 어깨를 무겁게 짓누르고 있었다. 이제 그에게 남은 것은 복수뿐이었다.
-
-제이크는 담배를 태우며, 먼 곳을 바라보았다. 도시의 불빛이 흐리게 일렁이는 동안, 그는 결심했다. 이 밤이 끝나기 전에, 그는 그를 아프게 만든 이들에게 자신의 결심을 알릴 것이다. 그리고 그들이 그의 고통을 알게 되면, 도시는 다시는 예전으로 돌아갈 수 없을 것이다.</ContentContainer>
-                </ContentSection>
+                  <ContentContainer>
+                  {fetchedData ? (
+                <>
+                  <div>
+                    <h3>Text Content</h3>
+                    {fetchedData.text.map((text, index) => (
+                      <p key={index}>{text}</p>
+                    ))}
+                  </div>
+                  <div>
+                    <h3>Image Content</h3>
+                    {fetchedData.images.map((src, index) => (
+                      <img key={index} src={src} alt={`tweet-img-${index}`} />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                '불러올 데이터가 없습니다!'
+              )}
+                   </ContentContainer> 
+                  </ContentSection>
               </TextContainer>
           </TextSection>
           <Footer/>
