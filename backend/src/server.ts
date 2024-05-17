@@ -10,7 +10,8 @@ const PORT = 8080;
 app.use(cors());
 app.use(bodyParser.json());
 
-let crawledData = null;
+type CrawledData = { text: string[]; images: string[] } | null;
+let crawledData:CrawledData = null;
 app.get('/', (req, res) => {
     res.send('hello!');
 });
@@ -21,6 +22,7 @@ app.post('/url', async (req, res) => {
 
   try {
     const data = await tweetCrawler(url);
+    crawledData = data; 
     res.json({ nonLoginAccessData: data });
   } catch (error) {
     console.error('Error in tweetCrawler:', error);
