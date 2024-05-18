@@ -78,11 +78,11 @@ function App() {
                       <p key={index}>{text}</p>
                     ))}
                   </div>
-                  <div>
-                    {fetchedData.images.map((src, index) => (
-                      <img key={index} src={src} alt={`tweet-img-${index}`} />
-                    ))}
-                  </div>
+                    <TweetImageContainer>
+                    {fetchedData.images.map((src, index) => (                      
+                        <TweetImage key={index} src={src} alt={`tweet-img-${index}`} />
+                        ))}
+                    </TweetImageContainer>
                 </>
               ) : (
                 '불러올 데이터가 없습니다!'
@@ -96,6 +96,18 @@ function App() {
   );
 }
 export default App;
+
+const TweetImageContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0;
+`
+
+const TweetImage = styled.img`
+  border-radius: 30px;
+  width: 250px;
+  height: 350px;
+`
 
 const InfoText = styled.h4`
   font-size: 18px;
