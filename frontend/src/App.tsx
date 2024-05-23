@@ -56,6 +56,7 @@ function App() {
     <TopContainer>      
         <Header>
           <HeaderList>
+            <LoginButton>로그인</LoginButton>
             <li>간단 설명서</li>
             <li>Twiroller에 대하여</li>
           </HeaderList>
@@ -96,6 +97,18 @@ function App() {
   );
 }
 export default App;
+
+const LoginButton = styled.button`
+  background-color: aliceblue;
+  color: #888;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 120px;
+  height: 40px;
+  position: absolute;
+  left: 1rem;
+  top: 0.5rem;
+`
 
 const TweetImageContainer = styled.div`
   display: flex;
