@@ -1,5 +1,4 @@
 import  {tweetCrawler}  from './scripts/tweetCrawler.js';
-import { loginAcceptCrawler } from './scripts/loginAcceptCrawler.js';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -15,7 +14,7 @@ app.use(cookieParser());
 
 const consumerKey = 'YOUR_CONSUMER_KEY';
 const consumerSecret = 'YOUR_CONSUMER_SECRET';
-const callbackURL = 'http://localhost:3000/callback';
+const callbackURL = 'http://localhost:8080/callback';
 let requestTokenSecret: string | null = null;
 
 //인증요청
@@ -33,7 +32,12 @@ app.get('/login', async (req, res) => {
       const requestToken = new URLSearchParams(response.data);
       requestTokenSecret = requestToken.get('oauth_token_secret');
 
-      res.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${requestToken.get('oauth_token')}`);
+      if (requestTokenSecret) {
+        res.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${requestToken.get('oauth_token')}`);
+      } else {
+        res.status(500).send('Error getting request token secret');
+      }
+      
   } catch (error) {
       res.status(500).send('Error getting request token');
   }

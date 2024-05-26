@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     const handleLoginClick = () => {
-        window.location.href = 'https://twitter.com/oauth/authenticate?oauth_token=BcSGRwAAAAAACD4BAAABj6XSd5k';
+        window.location.href = 'https://twitter.com/oauth/authenticate?oauth_token=tI8ifYsKDIAzyFQUuIVxt2BiJvjgR5';
     };
     return (
       <>
@@ -20,7 +20,7 @@ function Header() {
     )
   }
   export default Header;
-  
+
 const StyledLink = styled(Link)`
   font-weight: 600;
   font-size: 23px;
