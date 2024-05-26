@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 const consumerKey = 'YOUR_CONSUMER_KEY';
 const consumerSecret = 'YOUR_CONSUMER_SECRET';
-const callbackURL = 'http://localhost:3000/callback';
+const callbackURL = 'http://localhost:8080/callback';
 let requestTokenSecret = null;
 //인증요청
 app.get('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -35,7 +35,12 @@ app.get('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         const requestToken = new URLSearchParams(response.data);
         requestTokenSecret = requestToken.get('oauth_token_secret');
-        res.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${requestToken.get('oauth_token')}`);
+        if (requestTokenSecret) {
+            res.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${requestToken.get('oauth_token')}`);
+        }
+        else {
+            res.status(500).send('Error getting request token secret');
+        }
     }
     catch (error) {
         res.status(500).send('Error getting request token');
