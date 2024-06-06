@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useState, useRef } from 'react';
-import Footer from './Footer';
 
 function Home() {
     const urlInput = useRef<HTMLInputElement>(null);
@@ -82,7 +81,6 @@ function Home() {
                     </ContentSection>
                 </TextContainer>
             </TextSection>
-            <Footer/>
       </TopContainer>
     );
   }
