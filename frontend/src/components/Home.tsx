@@ -56,7 +56,10 @@ function Home() {
               <InfoText>본문을 추출할 트윗 주소를 입력해주세요.</InfoText>
                 <TextContainer>
                     <SubmitSection>
-                      <HyperLinkInput type='text' ref={urlInput}/>
+                      <InputWrap>
+                        <HyperLinkInput type='text' ref={urlInput}/>
+                        <InputTextDeleteBtn>x</InputTextDeleteBtn>
+                      </InputWrap>
                       <CrawlingBtn onClick={handleFetchUrl}>추출하기</CrawlingBtn>
                     </SubmitSection>         
                   <ContentSection>
@@ -85,7 +88,25 @@ function Home() {
     );
   }
   export default Home;
-  
+
+  const InputWrap = styled.div`
+    position: relative;
+    height: 50px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+  `
+
+  const InputTextDeleteBtn = styled.button`
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    right: 30px;
+    background-color: none;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  `
   const TweetImageContainer = styled.div`
     display: flex;
     justify-content: space-between;
@@ -155,7 +176,7 @@ function Home() {
   `
   
   const HyperLinkInput = styled.input`
-    width: 50%;
+    width: 100%;
     height: 25px;
     border-radius: 10px;
     margin-right: 1rem;
