@@ -12,15 +12,14 @@ export default Footer;
 
 
 const FooterContainer = styled.footer`
-    background-color: #f6f6f6;
-    color: #222;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: end;
+  flex-shrink: 0;  // Footer가 항상 하단에 고정되도록 함
+  background-color: #f6f6f6;
+  color: #222;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 `
 
 const Address = styled.p`
