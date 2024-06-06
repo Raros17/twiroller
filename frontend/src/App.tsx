@@ -8,20 +8,27 @@ import styled from 'styled-components';
 function App() {
   return (
     <>
-    <BrowserRouter> 
+    <BrowserRouter>         
+    <Header/>
       <AppContainer>
-        <Header/>
-        <Router/>
-        <Footer/>
+        <MainContent>
+          <Router/>
+        </MainContent>        
       </AppContainer>
+      <Footer/>
     </BrowserRouter>        
     </>
   )
 }
 export default App;
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-bottom: -40px;
+`;
 
-const AppContainer = styled.section`
-  height: 100%;
-  position: relative;
-  padding-bottom: 80px;
-`
+const MainContent = styled.main`
+  flex: 1 0 auto;
+  overflow-y: auto;  // 내용이 넘칠 때 스크롤되도록 함
+`;
