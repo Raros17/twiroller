@@ -22,6 +22,12 @@ function Home() {
       setIsLoading(false);
     }
   }
+
+  const clearInputField = () =>{
+    if (urlInput.current) {
+      urlInput.current.value = '';
+  }
+  }
   
     async function handleFetchUrl(){
           const urlInputData = urlInput.current?.value;
@@ -58,7 +64,7 @@ function Home() {
                     <SubmitSection>
                       <InputWrap>
                         <HyperLinkInput type='text' ref={urlInput}/>
-                        <InputTextDeleteBtn>x</InputTextDeleteBtn>
+                        <InputTextDeleteBtn onClick={clearInputField}>x</InputTextDeleteBtn>
                       </InputWrap>
                       <CrawlingBtn onClick={handleFetchUrl}>추출하기</CrawlingBtn>
                     </SubmitSection>         
