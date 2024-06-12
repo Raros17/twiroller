@@ -4,6 +4,11 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import axios from 'axios';
+import { Strategy as TwitterStrategy } from 'passport-twitter';
+import passport from 'passport';
+import session from 'express-session';
+import keys from './config/keys'; 
+
 
 const app = express();
 const PORT = 8080;
@@ -11,73 +16,68 @@ const PORT = 8080;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-const consumerKey = 'YOUR_CONSUMER_KEY';
-const consumerSecret = 'YOUR_CONSUMER_SECRET';
-const callbackURL = 'http://localhost:8080/callback';
-let requestTokenSecret: string | null = null;
-
-//인증요청
-app.get('/login', async (req, res) => {
-  try {
-      const response = await axios.post('https://api.twitter.com/oauth/request_token', null, {
-          params: {
-              oauth_callback: callbackURL
-          },
-          headers: {
-              Authorization: `OAuth oauth_consumer_key="${consumerKey}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${Math.floor(Date.now() / 1000)}", oauth_nonce="${Math.random().toString(36).substring(7)}", oauth_version="1.0"`
-          }
-      });
-
-      const requestToken = new URLSearchParams(response.data);
-      requestTokenSecret = requestToken.get('oauth_token_secret');
-
-      if (requestTokenSecret) {
-        res.redirect(`https://api.twitter.com/oauth/authenticate?oauth_token=${requestToken.get('oauth_token')}`);
-      } else {
-        res.status(500).send('Error getting request token secret');
-      }
-      
-  } catch (error) {
-      res.status(500).send('Error getting request token');
-  }
+passport.serializeUser((user, done) => {
+  done(null, user);
 });
 
-// 트위터 콜백 처리
-app.get('/callback', async (req, res) => {
-  const { oauth_token, oauth_verifier } = req.query;
-  
-  try {
-      const response = await axios.post('https://api.twitter.com/oauth/access_token', null, {
-          params: {
-              oauth_token,
-              oauth_verifier
-          },
-          headers: {
-              Authorization: `OAuth oauth_consumer_key="${consumerKey}", oauth_token="${oauth_token}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${Math.floor(Date.now() / 1000)}", oauth_nonce="${Math.random().toString(36).substring(7)}", oauth_version="1.0"`
-          }
-      });
 
-      const accessToken = new URLSearchParams(response.data);
-      const oauthToken = accessToken.get('oauth_token');
-      const oauthTokenSecret = accessToken.get('oauth_token_secret');
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
 
-      res.cookie('oauth_token', oauthToken, { httpOnly: true });
-      res.cookie('oauth_token_secret', oauthTokenSecret, { httpOnly: true });
+passport.use(new TwitterStrategy({
+  consumerKey: keys.twitter.consumerKey,
+  consumerSecret: keys.twitter.consumerSecret,
+  callbackURL: keys.twitter.callbackURL
+}, (token, tokenSecret, profile, done) => {
+  return done(null, { profile, token, tokenSecret });
+}));
 
+// 트위터 로그인 라우트
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+// 트위터 콜백 라우트
+app.get('/auth/twitter/callback',
+  passport.authenticate('twitter', { failureRedirect: '/' }),
+  (req, res) => {
+      // 로그인 성공 시 세션에 토큰 저장
+      req.session.oauthToken = req.user.token;
+      req.session.oauthTokenSecret = req.user.tokenSecret;
       res.redirect('/profile');
-  } catch (error) {
-      res.status(500).send('Error getting access token');
   }
+);
+
+// 로그아웃 라우트
+app.get('/logout', (req, res) => {
+  req.logout((err) => {
+      if (err) {
+          return next(err);
+      }
+      req.session.destroy();
+      res.redirect('/');
+  });
 });
 
 app.get('/profile', async (req, res) => {
-  const { oauth_token, oauth_token_secret } = req.cookies;
+  const oauthToken = req.session.oauthToken;
+  const oauthTokenSecret = req.session.oauthTokenSecret;
+
+  if (!oauthToken || !oauthTokenSecret) {
+      return res.status(401).json({ error: 'Not authenticated' });
+  }
 
   try {
       const response = await axios.get('https://api.twitter.com/1.1/account/verify_credentials.json', {
           headers: {
-              Authorization: `OAuth oauth_consumer_key="${consumerKey}", oauth_token="${oauth_token}", oauth_token_secret="${oauth_token_secret}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${Math.floor(Date.now() / 1000)}", oauth_nonce="${Math.random().toString(36).substring(7)}", oauth_version="1.0"`
+              Authorization: `OAuth oauth_consumer_key="${keys.twitter.consumerKey}", oauth_token="${oauthToken}", oauth_token_secret="${oauthTokenSecret}", oauth_signature_method="HMAC-SHA1", oauth_timestamp="${Math.floor(Date.now() / 1000)}", oauth_nonce="${Math.random().toString(36).substring(7)}", oauth_version="1.0"`
           }
       });
 
@@ -86,6 +86,7 @@ app.get('/profile', async (req, res) => {
       res.status(500).send('Error fetching user profile');
   }
 });
+
 
 //하단 크롤러
 type CrawledData = { text: string[]; images: string[] } | null;
