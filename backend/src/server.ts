@@ -8,7 +8,8 @@ import { Strategy as TwitterStrategy } from 'passport-twitter';
 import passport from 'passport';
 import session from 'express-session';
 import keys from './config/keys'; 
-
+import dotenv from 'dotenv';
+dotenv.config(); 
 
 const app = express();
 const PORT = 8080;
