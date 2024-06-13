@@ -109,7 +109,7 @@ function Home() {
     height: 28px;
     position: absolute;
     right: 30px;
-    background-color: none;
+    background-color: #e8e8e8;
     border: 1px solid #ccc;
     cursor: pointer;
   `
