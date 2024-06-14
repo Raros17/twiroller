@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-import { useState, useRef } from 'react';
-
+import { useState, useRef, useEffect } from 'react';
 function Home() {
     const urlInput = useRef<HTMLInputElement>(null);
     const [fetchedData, setFetchedData ] = useState<{ text: string[], images: string[] }|null>(null)
     const [isLoading, setIsLoading] = useState(false);
-    
+    useEffect(() => {
+      console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY);
+  }, []);
     async function fetchDataFromUrl(){
     setIsLoading(true);
     const url = 'http://localhost:8080/crawl';
