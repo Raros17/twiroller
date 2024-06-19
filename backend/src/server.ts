@@ -8,6 +8,7 @@ import { Strategy as TwitterStrategy } from 'passport-twitter';
 import passport from 'passport';
 import session from 'express-session';
 import keys from './config/keys'; 
+import { User } from './types/TwitterProfile';
 
 const app = express();
 const PORT = 8080;
@@ -28,8 +29,8 @@ passport.serializeUser((user, done) => {
 });
 
 
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
+passport.deserializeUser((user: User, done) => {
+  done(null, user);
 });
 
 passport.use(new TwitterStrategy({
@@ -37,7 +38,15 @@ passport.use(new TwitterStrategy({
   consumerSecret: keys.twitter.consumerSecret,
   callbackURL: keys.twitter.callbackURL
 }, (token, tokenSecret, profile, done) => {
-  return done(null, { profile, token, tokenSecret });
+  const user: User = {
+    id: profile.id,
+    username: profile.username,
+    displayName: profile.displayName,
+    token: token
+  };
+
+  // 사용자 정보 반환
+  return done(null, user);
 }));
 
 // 트위터 로그인 라우트
@@ -48,6 +57,9 @@ app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/' }),
   (req, res) => {
       // 로그인 성공 시 세션에 토큰 저장
+      if (!req.user) {
+        return res.status(401).send('User not authenticated');
+      }
       req.session.oauthToken = req.user.token;
       req.session.oauthTokenSecret = req.user.tokenSecret;
       res.redirect('/profile');
