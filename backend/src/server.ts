@@ -56,26 +56,21 @@ app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/' }),
   (req, res) => {
-      // 로그인 성공 시 세션에 토큰 저장
-      if (!req.user) {
-        return res.status(401).send('User not authenticated');
-      }
-      req.session.oauthToken = req.user.token;
-      req.session.oauthTokenSecret = req.user.tokenSecret;
-      res.redirect('/profile');
+      // 인증 성공 시 리디렉션 경로
+    res.redirect('/profile');
   }
 );
 
-// 로그아웃 라우트
-app.get('/logout', (req, res) => {
-  req.logout((err) => {
-      if (err) {
-          return next(err);
-      }
-      req.session.destroy();
-      res.redirect('/');
-  });
-});
+// // 로그아웃 라우트
+// app.get('/logout', (req, res) => {
+//   req.logout((err) => {
+//       if (err) {
+//           return next(err);
+//       }
+//       req.session.destroy();
+//       res.redirect('/');
+//   });
+// });
 
 app.get('/profile', async (req, res) => {
   const oauthToken = req.session.oauthToken;
