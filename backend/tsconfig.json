@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "typeRoots": ["./node_modules/@types", "./src/types"],
       "target": "ES6",
       "module": "ESNext",
       "outDir": "./dist", 
@@ -9,6 +10,6 @@
       "strict": true,
       "moduleResolution": "node",
     },
-    "include": ["src/**/*"],       
+    "include": ["src/**/*", "types"],       
     "exclude": ["dist", "node_modules"]  
   }
