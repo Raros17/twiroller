@@ -30,5 +30,5 @@ const AppContainer = styled.div`
 
 const MainContent = styled.main`
   flex: 1 0 auto;
-  overflow-y: auto;  // 내용이 넘칠 때 스크롤되도록 함
+  overflow-y: auto;  
 `;

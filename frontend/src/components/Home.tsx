@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import { useState, useRef, useEffect } from 'react';
+import '../styles/global-style.css';  
+
 function Home() {
     const urlInput = useRef<HTMLInputElement>(null);
     const [fetchedData, setFetchedData ] = useState<{ text: string[], images: string[] }|null>(null)
     const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
       console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY);
   }, []);
+
     async function fetchDataFromUrl(){
     setIsLoading(true);
     const url = 'http://localhost:8080/crawl';
@@ -25,14 +29,13 @@ function Home() {
   }
 
   const clearInputField = () =>{
-    if (urlInput.current) {
-      urlInput.current.value = '';
-  }
+    urlInput.current && (urlInput.current.value = '');
   }
   
     async function handleFetchUrl(){
           const urlInputData = urlInput.current?.value;
           if(!urlInputData) return;
+
           setIsLoading(true);
   
           try {
@@ -71,22 +74,26 @@ function Home() {
                     </SubmitSection>         
                   <ContentSection>
                     <ContentContainer>
-                    {fetchedData ? (
-                  <>
-                    <div>
-                      {fetchedData.text.map((text, index) => (
-                        <p key={index}>{text}</p>
-                      ))}
-                    </div>
-                      <TweetImageContainer>
-                      {fetchedData.images.map((src, index) => (                      
-                          <TweetImage key={index} src={src} alt={`tweet-img-${index}`} />
-                          ))}
-                      </TweetImageContainer>
-                  </>
-                ) : (
-                  '불러올 데이터가 없습니다!'
-                )}
+                    {isLoading ? (
+                <LoaderContainer>
+                  <div className="loader"></div>
+                </LoaderContainer>
+              ) : fetchedData ? (
+                <>
+                  <div>
+                    {fetchedData.text.map((text, index) => (
+                      <p key={index}>{text}</p>
+                    ))}
+                  </div>
+                  <TweetImageContainer>
+                    {fetchedData.images.map((src, index) => (
+                      <TweetImage key={index} src={src} alt={`tweet-img-${index}`} />
+                    ))}
+                  </TweetImageContainer>
+                </>
+              ) : (
+                '불러올 데이터가 없습니다!'
+              )}
                      </ContentContainer> 
                     </ContentSection>
                 </TextContainer>
@@ -95,6 +102,13 @@ function Home() {
     );
   }
   export default Home;
+
+  const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+`;
 
   const InputWrap = styled.div`
     position: relative;
