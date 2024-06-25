@@ -11,7 +11,7 @@ function Home() {
       console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY);
   }, []);
 
-    async function fetchDataFromUrl(){
+    async function fetchCrawledData(){
     setIsLoading(true);
     const url = 'http://localhost:8080/crawl';
     try {
@@ -32,7 +32,7 @@ function Home() {
     urlInput.current && (urlInput.current.value = '');
   }
   
-    async function handleFetchUrl(){
+    async function handleSubmit(){
           const urlInputData = urlInput.current?.value;
           if(!urlInputData) return;
 
@@ -51,7 +51,7 @@ function Home() {
               throw new Error('Network response was not ok');
             }
             console.log('URL successfully sent to server');        
-            await fetchDataFromUrl();
+            await fetchCrawledData();
         } catch (error) {
           console.error('Error sending URL data:', error);
         } finally{
@@ -70,7 +70,7 @@ function Home() {
                         <HyperLinkInput type='text' ref={urlInput}/>
                         <InputTextDeleteBtn onClick={clearInputField}>x</InputTextDeleteBtn>
                       </InputWrap>
-                      <CrawlingBtn onClick={handleFetchUrl}>추출하기</CrawlingBtn>
+                      <CrawlingBtn onClick={handleSubmit}>추출하기</CrawlingBtn>
                     </SubmitSection>         
                   <ContentSection>
                     <ContentContainer>
