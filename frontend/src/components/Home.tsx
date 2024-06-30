@@ -38,9 +38,10 @@ function Home() {
           const urlInputData = urlInput.current?.value;
           if(!urlInputData) return;
 
-          const urlPattern = /^http:\/\/x\.com\//;
+          console.log(urlInputData)
+          const urlPattern = /^https:\/\/x\.com\//;
         if (!urlPattern.test(urlInputData)) {
-          setErrorMessage('URL이 http://x.com/로 시작해야 합니다.');
+          setErrorMessage('URL이 https://x.com/로 시작해야 합니다.');
           return;
         }
 
