@@ -11,7 +11,6 @@ height: 100px;
 export const InputWrap = styled.div`
   position: relative;
   height: 50px;
-  width: 50%;
   display: flex;
   align-items: center;
 `
@@ -40,6 +39,17 @@ export const TweetImage = styled.img`
   border-radius: 30px;
   width: 250px;
   height: 350px;
+`
+
+export const InputSection = styled.section`
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+`
+
+export const ErrorMessageSection = styled.div`
+    color: #d32f2f;
+    font-size: 14px;
 `
 
 export const InfoText = styled.h4`
