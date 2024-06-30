@@ -21,10 +21,14 @@ export const InputTextDeleteBtn = styled.button`
   width: 28px;
   height: 28px;
   position: absolute;
-  right: 30px;
+  right: 120px;
   background-color: #e8e8e8;
   border: 1px solid #ccc;
   cursor: pointer;
+  &:hover{
+    background-color: #ccc;
+    transition: all 0.1s ease;
+}
 `
 export const TweetImageContainer = styled.div`
   display: flex;
@@ -100,13 +104,16 @@ export const HyperLinkInput = styled.input`
   border-radius: 10px;
   margin-right: 1rem;
   outline: none;
-  border: 1px solid #1D9BF0;
+  border: 1px solid #888;
   font-size: 17px;
   font-family: inherit;
   padding: 5px 10px;
+  &:focus {
+    border: 1px solid #1D9BF0;
+  }
 `
 export const CrawlingBtn = styled.button`
-  width: 100px;
+  min-width: 100px;
   height: 40px;
   font-size: 17px;
   border-radius: 20px;
