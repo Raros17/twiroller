@@ -1,4 +1,4 @@
-import { TopContainer, LoaderContainer, InputWrap, InputTextDeleteBtn, TweetImageContainer, TweetImage, InfoText, TextContainer, SubmitSection, TextSection, Title, ContentSection, ContentContainer, HyperLinkInput, CrawlingBtn } from './Home.styles';
+import { TopContainer, LoaderContainer, TweetImageContainer, TweetImage, InfoText, TextContainer, SubmitSection, TextSection, Title, ContentSection, ContentContainer } from './Home.styles';
 import { useState, useRef, useEffect } from 'react';
 import '../styles/global-style.css';  
 import UrlInputSection from './UrlInputSection';
@@ -7,6 +7,7 @@ function Home() {
     const urlInput = useRef<HTMLInputElement>(null);
     const [fetchedData, setFetchedData ] = useState<{ text: string[], images: string[] }|null>(null)
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     useEffect(() => {
       console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY);
@@ -37,6 +38,13 @@ function Home() {
           const urlInputData = urlInput.current?.value;
           if(!urlInputData) return;
 
+          const urlPattern = /^http:\/\/x\.com\//;
+        if (!urlPattern.test(urlInputData)) {
+          setErrorMessage('URL이 http://x.com/로 시작해야 합니다.');
+          return;
+        }
+
+          setErrorMessage('');
           setIsLoading(true);
   
           try {
@@ -67,7 +75,7 @@ function Home() {
               <InfoText>본문을 추출할 트윗 주소를 입력해주세요.</InfoText>
                 <TextContainer>
                     <SubmitSection>
-                    <UrlInputSection urlInput={urlInput} clearInputField={clearInputField} handleSubmit={handleSubmit} />
+                    <UrlInputSection urlInput={urlInput} clearInputField={clearInputField} handleSubmit={handleSubmit} errorMessage={errorMessage}  />
                     </SubmitSection>         
                   <ContentSection>
                     <ContentContainer>
