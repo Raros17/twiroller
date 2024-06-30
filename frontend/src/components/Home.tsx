@@ -1,6 +1,7 @@
 import { TopContainer, LoaderContainer, InputWrap, InputTextDeleteBtn, TweetImageContainer, TweetImage, InfoText, TextContainer, SubmitSection, TextSection, Title, ContentSection, ContentContainer, HyperLinkInput, CrawlingBtn } from './Home.styles';
 import { useState, useRef, useEffect } from 'react';
 import '../styles/global-style.css';  
+import UrlInputSection from './UrlInputSection';
 
 function Home() {
     const urlInput = useRef<HTMLInputElement>(null);
@@ -66,11 +67,7 @@ function Home() {
               <InfoText>본문을 추출할 트윗 주소를 입력해주세요.</InfoText>
                 <TextContainer>
                     <SubmitSection>
-                      <InputWrap>
-                        <HyperLinkInput type='text' ref={urlInput}/>
-                        <InputTextDeleteBtn onClick={clearInputField}>x</InputTextDeleteBtn>
-                      </InputWrap>
-                      <CrawlingBtn onClick={handleSubmit}>추출하기</CrawlingBtn>
+                    <UrlInputSection urlInput={urlInput} clearInputField={clearInputField} handleSubmit={handleSubmit} />
                     </SubmitSection>         
                   <ContentSection>
                     <ContentContainer>
