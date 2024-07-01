@@ -31,17 +31,22 @@ function Home() {
   }
 
   const clearInputField = () =>{
-    urlInput.current && (urlInput.current.value = '');
+    if (urlInput.current) {
+      urlInput.current.value = '';
+      setErrorMessage(''); 
+    }
   }
   
     async function handleSubmit(){
           const urlInputData = urlInput.current?.value;
-          if(!urlInputData) return;
+          if(!urlInputData) {
+            setErrorMessage('Url을 입력해주세요!');
+            return
+          };
 
-          console.log(urlInputData)
           const urlPattern = /^https:\/\/x\.com\//;
         if (!urlPattern.test(urlInputData)) {
-          setErrorMessage('URL이 https://x.com/로 시작해야 합니다.');
+          setErrorMessage('유효한 Url 주소인지 다시 한번 확인해주세요!');
           return;
         }
 
@@ -67,7 +72,9 @@ function Home() {
         } finally{
           setIsLoading(false)
         }
-      }
+      };
+
+      
   
     return (
       <TopContainer>                
