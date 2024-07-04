@@ -1,5 +1,12 @@
-import React, { RefObject, KeyboardEvent } from 'react';
-import { InputWrap, HyperLinkInput, InputTextDeleteBtn, CrawlingBtn, ErrorMessageSection, InputSection } from './Home.styles';
+import React, { RefObject, KeyboardEvent } from "react";
+import {
+  InputWrap,
+  HyperLinkInput,
+  InputTextDeleteBtn,
+  CrawlingBtn,
+  ErrorMessageSection,
+  InputSection,
+} from "./Home.styles";
 
 interface UrlInputSectionProps {
   urlInput: RefObject<HTMLInputElement>;
@@ -8,13 +15,17 @@ interface UrlInputSectionProps {
   errorMessage: string;
 }
 
-const UrlInputSection: React.FC<UrlInputSectionProps> = ({ urlInput, clearInputField, handleSubmit, errorMessage }) => {
-
-    const handleKeyDown = (event:KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter'){
-            handleSubmit();
-        }
+const UrlInputSection: React.FC<UrlInputSectionProps> = ({
+  urlInput,
+  clearInputField,
+  handleSubmit,
+  errorMessage,
+}) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit();
     }
+  };
 
   return (
     <InputSection>
@@ -24,9 +35,14 @@ const UrlInputSection: React.FC<UrlInputSectionProps> = ({ urlInput, clearInputF
         </ErrorMessageSection>
       )}
       <InputWrap>
-        <HyperLinkInput type="text" ref={urlInput} onKeyDown={handleKeyDown} placeholder='최하단 Tweet URL을 입력하세요.'/>
+        <HyperLinkInput
+          type="text"
+          ref={urlInput}
+          onKeyDown={handleKeyDown}
+          placeholder="최하단 Tweet URL을 입력하세요."
+        />
         <InputTextDeleteBtn onClick={clearInputField}>x</InputTextDeleteBtn>
-        <CrawlingBtn onClick={handleSubmit} >추출하기</CrawlingBtn> 
+        <CrawlingBtn onClick={handleSubmit}>추출하기</CrawlingBtn>
       </InputWrap>
     </InputSection>
   );
