@@ -3,4 +3,4 @@
   "bracketSpacing": true,
   "bracketSameLine": true,
   "arrowParens": "avoid",
-  "printWidth": 80 }
+  "printWidth": 120 }

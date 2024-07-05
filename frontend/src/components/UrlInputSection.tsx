@@ -15,12 +15,7 @@ interface UrlInputSectionProps {
   errorMessage: string;
 }
 
-const UrlInputSection: React.FC<UrlInputSectionProps> = ({
-  urlInput,
-  clearInputField,
-  handleSubmit,
-  errorMessage,
-}) => {
+const UrlInputSection: React.FC<UrlInputSectionProps> = ({ urlInput, clearInputField, handleSubmit, errorMessage }) => {
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSubmit();

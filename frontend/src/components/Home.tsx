@@ -14,6 +14,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 import "../styles/global-style.css";
 import UrlInputSection from "./UrlInputSection";
+import Modal from "./Modal";
 
 function Home() {
   const urlInput = useRef<HTMLInputElement>(null);
@@ -91,6 +92,7 @@ function Home() {
 
   return (
     <TopContainer>
+      <Modal />
       <TextSection>
         <Title>Twiroller</Title>
         <InfoText>본문을 추출할 트윗 주소를 입력해주세요.</InfoText>
@@ -118,11 +120,7 @@ function Home() {
                   </div>
                   <TweetImageContainer>
                     {fetchedData.images.map((src, index) => (
-                      <TweetImage
-                        key={index}
-                        src={src}
-                        alt={`tweet-img-${index}`}
-                      />
+                      <TweetImage key={index} src={src} alt={`tweet-img-${index}`} />
                     ))}
                   </TweetImageContainer>
                 </>

@@ -1,16 +1,9 @@
-import {
-  HeaderContainer,
-  LoginButton,
-  StyledLink,
-  HeaderList,
-  ThemeBtn,
-} from "./Header.styles";
+import { HeaderContainer, LoginButton, StyledLink, HeaderList, ThemeBtn } from "./Header.styles";
 import { CiDark } from "react-icons/ci";
 
 function Header() {
   const handleLoginClick = () => {
-    window.location.href =
-      "https://twitter.com/oauth/authenticate?oauth_token=tI8ifYsKDIAzyFQUuIVxt2BiJvjgR5";
+    window.location.href = "https://twitter.com/oauth/authenticate?oauth_token=tI8ifYsKDIAzyFQUuIVxt2BiJvjgR5";
   };
   return (
     <>

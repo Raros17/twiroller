@@ -9,7 +9,7 @@
       "plugin:@typescript-eslint/recommended",
       "plugin:react/recommended",
       "plugin:prettier/recommended",
-      "plugin:react/jsx-runtime",
+      "plugin:react/jsx-runtime"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -31,12 +31,12 @@
       "no-unused-vars": "warn",
       "no-console": "warn",
       "react/prop-types": "off",
-      "max-len": ["error", { "code": 80 }],
+      "max-len": ["error", { "code": 120 }],
       "prettier/prettier": [
         "error",
         {
           "singleQuote": false,
-          "printWidth": 80
+          "printWidth": 120
         }
       ]
     },
