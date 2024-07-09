@@ -1,12 +1,18 @@
 import styled from "styled-components";
 import { FaX } from "react-icons/fa6";
 import { MdOutlineFileDownload } from "react-icons/md";
+import { useRecoilState } from "recoil";
+import { modalState } from "../recoils/atoms/modalsAtom";
 
 function Modal() {
+  const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
   return (
     <ModalContainer>
       <ModalSection>
-        <ExitBtn>
+        <ExitBtn onClick={handleModalClose}>
           <FaX />
         </ExitBtn>
         <DownloadBtn>

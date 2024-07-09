@@ -15,6 +15,8 @@ import { useState, useRef, useEffect } from "react";
 import "../styles/global-style.css";
 import UrlInputSection from "./UrlInputSection";
 import Modal from "./Modal";
+import { useRecoilState } from "recoil";
+import { modalState } from "../recoils/atoms/modalsAtom";
 
 function Home() {
   const urlInput = useRef<HTMLInputElement>(null);
@@ -24,6 +26,7 @@ function Home() {
   } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [modalOpen, setModalOpen] = useRecoilState(modalState);
 
   useEffect(() => {
     console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY);
@@ -89,10 +92,12 @@ function Home() {
       setIsLoading(false);
     }
   }
-
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
   return (
     <TopContainer>
-      <Modal />
+      {modalOpen && <Modal />}
       <TextSection>
         <Title>Twiroller</Title>
         <InfoText>본문을 추출할 트윗 주소를 입력해주세요.</InfoText>
@@ -104,6 +109,7 @@ function Home() {
               handleSubmit={handleSubmit}
               errorMessage={errorMessage}
             />
+            <button onClick={handleModalOpen}>모달</button>
           </SubmitSection>
           <ContentSection>
             <ContentContainer>
