@@ -5,7 +5,7 @@ function Login() {
   };
 
   return (
-    <div style={{backgroundColor: "red"}}>
+    <div style={{ backgroundColor: "red" }}>
       <h2>트위터로 로그인 하기</h2>
       <button>로그인하기</button>
     </div>
