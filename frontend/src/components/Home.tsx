@@ -16,7 +16,7 @@ import "../styles/global-style.css";
 import UrlInputSection from "./UrlInputSection";
 import Modal from "./Modal";
 import { useRecoilState } from "recoil";
-import { modalState } from "../recoils/atoms/modalsAtom";
+import { modalState, modalImageState } from "../recoils/atoms/modalsAtom";
 
 function Home() {
   const urlInput = useRef<HTMLInputElement>(null);
@@ -27,6 +27,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const [modalImage, setModalImage] = useRecoilState(modalImageState);
 
   useEffect(() => {
     console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY);
@@ -92,9 +93,12 @@ function Home() {
       setIsLoading(false);
     }
   }
-  const handleModalOpen = () => {
+
+  const handleModalOpen = (imageSrc: string) => {
+    setModalImage(imageSrc);
     setModalOpen(true);
   };
+
   return (
     <TopContainer>
       {modalOpen && <Modal />}
@@ -109,7 +113,6 @@ function Home() {
               handleSubmit={handleSubmit}
               errorMessage={errorMessage}
             />
-            <button onClick={handleModalOpen}>모달</button>
           </SubmitSection>
           <ContentSection>
             <ContentContainer>
@@ -126,7 +129,12 @@ function Home() {
                   </div>
                   <TweetImageContainer>
                     {fetchedData.images.map((src, index) => (
-                      <TweetImage key={index} src={src} alt={`tweet-img-${index}`} />
+                      <TweetImage
+                        key={index}
+                        src={src}
+                        alt={`tweet-img-${index}`}
+                        onClick={() => handleModalOpen(src)}
+                      />
                     ))}
                   </TweetImageContainer>
                 </>

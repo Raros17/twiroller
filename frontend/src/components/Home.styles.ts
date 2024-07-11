@@ -39,6 +39,7 @@ export const TweetImage = styled.img`
   border-radius: 30px;
   width: 250px;
   height: 350px;
+  cursor: pointer;
 `;
 
 export const InputSection = styled.section`

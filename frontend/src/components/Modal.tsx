@@ -2,13 +2,17 @@ import styled from "styled-components";
 import { FaX } from "react-icons/fa6";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useRecoilState } from "recoil";
-import { modalState } from "../recoils/atoms/modalsAtom";
+import { modalState, modalImageState } from "../recoils/atoms/modalsAtom";
 
 function Modal() {
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const [modalImage, setModalImage] = useRecoilState(modalImageState);
+
   const handleModalClose = () => {
     setModalOpen(false);
+    setModalImage("");
   };
+
   return (
     <ModalContainer>
       <ModalSection>
@@ -18,11 +22,19 @@ function Modal() {
         <DownloadBtn>
           <MdOutlineFileDownload />
         </DownloadBtn>
+        {modalImage && <Image src={modalImage} alt="Modal Image" />}
       </ModalSection>
     </ModalContainer>
   );
 }
 export default Modal;
+
+const Image = styled.img`
+  width: auto;
+  max-width: 95%;
+  height: 100%;
+  border-radius: 20px;
+`;
 
 const DownloadBtn = styled.button`
   width: 3rem;
@@ -46,14 +58,18 @@ const ModalSection = styled.div`
   background-color: #fff;
   width: 100%;
   height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ModalContainer = styled.div`
   width: 80%;
-  height: 100%;
+  height: 95%;
   background-color: rgba(300, 300, 300, 0.8);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: absolute;
+  left: 10%;
   z-index: 10;
   border-radius: 30px;
   display: flex;
