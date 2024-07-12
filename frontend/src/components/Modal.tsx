@@ -13,13 +13,32 @@ function Modal() {
     setModalImage("");
   };
 
+  const handleDownloadImg = (imageUrl: string) => {
+    fetch(imageUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = "downloaded_image.jpg";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch(() => alert("Failed to download image"));
+  };
+
   return (
     <ModalContainer>
       <ModalSection>
         <ExitBtn onClick={handleModalClose}>
           <FaX />
         </ExitBtn>
-        <DownloadBtn>
+        <DownloadBtn
+          onClick={() => {
+            handleDownloadImg(modalImage);
+          }}>
           <MdOutlineFileDownload />
         </DownloadBtn>
         {modalImage && <Image src={modalImage} alt="Modal Image" />}
@@ -64,11 +83,12 @@ const ModalSection = styled.div`
 `;
 
 const ModalContainer = styled.div`
+  background-color: rgba(0, 0, 0, 0.8);
   width: 80%;
-  height: 95%;
+  height: 100vh;
   background-color: rgba(300, 300, 300, 0.8);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: absolute;
+  position: fixed;
   left: 10%;
   z-index: 10;
   border-radius: 30px;
