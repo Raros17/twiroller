@@ -108,6 +108,7 @@ app.post('/url', async (req, res) => {
   try {
     const data = await tweetCrawler(url);
     crawledData = data; 
+    console.log('Crawled Data:', data); 
     res.json({ nonLoginAccessData: data });
   } catch (error) {
     console.error('Error in tweetCrawler:', error);

@@ -33,6 +33,14 @@ function Home() {
     console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY);
   }, []);
 
+  function transformImageUrl(url: string) {
+    if (url.includes("name=")) {
+      return url.replace(/name=[^&]+/, "name=orig");
+    } else {
+      return url + "&name=orig";
+    }
+  }
+
   async function fetchCrawledData() {
     setIsLoading(true);
     const url = "http://localhost:8080/crawl";
@@ -42,7 +50,8 @@ function Home() {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      setFetchedData(data.nonLoginAccessData);
+      const transformedImages = data.nonLoginAccessData.images.map(transformImageUrl);
+      setFetchedData({ ...data.nonLoginAccessData, images: transformedImages });
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -131,7 +140,7 @@ function Home() {
                     {fetchedData.images.map((src, index) => (
                       <TweetImage
                         key={index}
-                        src={src}
+                        src={transformImageUrl(src)}
                         alt={`tweet-img-${index}`}
                         onClick={() => handleModalOpen(src)}
                       />

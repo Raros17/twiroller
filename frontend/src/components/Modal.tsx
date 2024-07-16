@@ -50,9 +50,10 @@ export default Modal;
 
 const Image = styled.img`
   width: auto;
-  max-width: 95%;
+  max-width: 100%;
   height: 100%;
   border-radius: 20px;
+  object-fit: contain;
 `;
 
 const DownloadBtn = styled.button`

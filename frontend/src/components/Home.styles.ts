@@ -37,8 +37,8 @@ export const TweetImageContainer = styled.div`
 
 export const TweetImage = styled.img`
   border-radius: 30px;
-  width: 250px;
-  height: 350px;
+  max-width: 100%;
+  max-height: 100%;
   cursor: pointer;
 `;
 
