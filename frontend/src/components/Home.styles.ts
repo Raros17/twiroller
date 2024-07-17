@@ -32,12 +32,14 @@ export const InputTextDeleteBtn = styled.button`
 export const TweetImageContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   margin: 2rem 0;
+  gap: 1rem;
 `;
 
 export const TweetImage = styled.img`
   border-radius: 30px;
-  max-width: 100%;
+  max-width: 23%;
   max-height: 100%;
   cursor: pointer;
 `;
