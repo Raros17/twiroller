@@ -3,7 +3,7 @@ import { FaX } from "react-icons/fa6";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useRecoilState } from "recoil";
 import { modalState, modalImageState } from "../recoils/atoms/modalsAtom";
-import { DownloadBtn, ModalSection, Image, ModalContainer, ExitBtn } from "./Modal.styles";
+import { Overlay, DownloadBtn, ModalSection, Image, ModalContainer, ExitBtn } from "./Modal.styles";
 
 function Modal() {
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
@@ -31,20 +31,23 @@ function Modal() {
   };
 
   return (
-    <ModalContainer>
-      <ModalSection>
-        <ExitBtn onClick={handleModalClose}>
-          <FaX />
-        </ExitBtn>
-        <DownloadBtn
-          onClick={() => {
-            handleDownloadImg(modalImage);
-          }}>
-          <MdOutlineFileDownload />
-        </DownloadBtn>
-        {modalImage && <Image src={modalImage} alt="Modal Image" />}
-      </ModalSection>
-    </ModalContainer>
+    <>
+      <Overlay onClick={handleModalClose} />
+      <ModalContainer>
+        <ModalSection>
+          <ExitBtn onClick={handleModalClose}>
+            <FaX />
+          </ExitBtn>
+          <DownloadBtn
+            onClick={() => {
+              handleDownloadImg(modalImage);
+            }}>
+            <MdOutlineFileDownload />
+          </DownloadBtn>
+          {modalImage && <Image src={modalImage} alt="Modal Image" />}
+        </ModalSection>
+      </ModalContainer>
+    </>
   );
 }
 export default Modal;

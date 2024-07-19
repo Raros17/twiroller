@@ -34,6 +34,17 @@ export const ModalSection = styled.div`
   align-items: center;
 `;
 
+export const Overlay = styled.div`
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  cursor: pointer;
+`;
+
 export const ModalContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
   width: 80%;
