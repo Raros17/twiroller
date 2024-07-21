@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { FaX } from "react-icons/fa6";
 import { MdOutlineFileDownload } from "react-icons/md";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { modalState, modalImageState } from "../recoils/atoms/modalsAtom";
 import { Overlay, DownloadBtn, ModalSection, Image, ModalContainer, ExitBtn } from "./Modal.styles";
 
 function Modal() {
-  const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const setModalOpen = useSetRecoilState(modalState);
   const [modalImage, setModalImage] = useRecoilState(modalImageState);
 
   const handleModalClose = () => {

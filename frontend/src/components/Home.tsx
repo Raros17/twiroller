@@ -15,7 +15,7 @@ import { useState, useRef, useEffect } from "react";
 import "../styles/global-style.css";
 import UrlInputSection from "./UrlInputSection";
 import Modal from "./Modal";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { modalState, modalImageState } from "../recoils/atoms/modalsAtom";
 
 function Home() {
@@ -27,7 +27,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
-  const [modalImage, setModalImage] = useRecoilState(modalImageState);
+  const setModalImage = useSetRecoilState(modalImageState);
 
   useEffect(() => {
     console.log(process.env.REACT_APP_TWITTER_CONSUMER_KEY);
