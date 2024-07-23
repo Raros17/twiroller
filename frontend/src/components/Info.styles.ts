@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const InfoSection = styled.section`
-  padding-top: 8rem;
+  padding-top: 10rem;
   display: flex;
   justify-content: center;
   height: 100%;
+  color: ${props => props.theme.text};
 `;
 export const InfoContainer = styled.section`
-  width: 60%;
+  width: 50%;
   h2 {
     font-size: 30px;
     margin-bottom: 3rem;

@@ -10,7 +10,6 @@ import Header from "./components/Header";
 function AppContent() {
   const theme = useRecoilValue(themeState);
   const currentTheme = theme === "light" ? lightTheme : darkTheme;
-
   return (
     <ThemeProvider theme={currentTheme}>
       <BrowserRouter>
@@ -38,4 +37,5 @@ const AppContainer = styled.div`
 const MainContent = styled.main`
   flex: 1 0 auto;
   overflow-y: auto;
+  background-color: ${props => props.theme.background};
 `;

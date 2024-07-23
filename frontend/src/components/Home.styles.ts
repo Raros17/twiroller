@@ -20,11 +20,12 @@ export const InputTextDeleteBtn = styled.button`
   height: 28px;
   position: absolute;
   right: 120px;
-  background-color: #e8e8e8;
+  color: ${props => props.theme.text};
+  background-color: ${props => props.theme.mainBtn};
   border: 1px solid #ccc;
   cursor: pointer;
   &:hover {
-    background-color: #ccc;
+    background-color: ${props => props.theme.hoverBtn};
     transition: all 0.1s ease;
   }
 `;
@@ -58,7 +59,6 @@ export const ErrorMessageSection = styled.div`
 export const InfoText = styled.h4`
   font-size: 18px;
   margin-bottom: 1rem;
-  color: #222;
   font-weight: 600;
 `;
 
@@ -77,6 +77,7 @@ export const TextSection = styled.section`
   flex-direction: column;
   align-items: center;
   padding-top: 60px;
+  color: ${props => props.theme.text};
 `;
 
 export const TopContainer = styled.section`
@@ -89,7 +90,6 @@ export const Title = styled.h1`
   font-size: 35px;
   font-weight: 800;
   margin: 2rem;
-  color: #222;
 `;
 
 export const ContentSection = styled.section`
@@ -100,10 +100,10 @@ export const ContentSection = styled.section`
 
 export const ContentContainer = styled.div`
   width: 60%;
-  background-color: aliceblue;
+  background-color: ${props => props.theme.body};
   padding: 3rem;
   font-size: 18px;
-  color: #222;
+  color: ${props => props.theme.text};
   font-weight: 500;
   border-radius: 10px;
   line-height: 1.5;
@@ -119,6 +119,8 @@ export const HyperLinkInput = styled.input`
   font-size: 17px;
   font-family: inherit;
   padding: 5px 10px;
+  background-color: ${props => props.theme.input};
+  color: ${props => props.theme.text};
   &:focus {
     border: 1px solid #1d9bf0;
   }

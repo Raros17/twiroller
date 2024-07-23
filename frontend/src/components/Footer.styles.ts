@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const FooterContainer = styled.footer`
-  flex-shrink: 0; // Footer가 항상 하단에 고정되도록 함
-  background-color: #f6f6f6;
-  color: #222;
+  flex-shrink: 0;
+  background-color: ${props => props.theme.footerBack};
+  color: ${props => props.theme.text};
   width: 100%;
   height: 40px;
   display: flex;
