@@ -39,6 +39,9 @@ export const ThemeBtn = styled.button`
   cursor: pointer;
   font-size: 35px;
   background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     background-color: #eeeeee;
   }

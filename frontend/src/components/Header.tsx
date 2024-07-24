@@ -1,5 +1,5 @@
 import { HeaderContainer, LoginButton, StyledLink, HeaderList, ThemeBtn } from "./Header.styles";
-import { CiDark } from "react-icons/ci";
+import { CiDark, CiLight } from "react-icons/ci";
 import { themeState } from "../recoils/atoms/themeAtom";
 import { useRecoilState } from "recoil";
 
@@ -19,9 +19,7 @@ function Header() {
           <StyledLink to="/">트윗 추출기</StyledLink>
           <StyledLink to="/info">간단 설명서</StyledLink>
         </HeaderList>
-        <ThemeBtn onClick={toggleTheme}>
-          <CiDark />
-        </ThemeBtn>
+        <ThemeBtn onClick={toggleTheme}>{theme === "light" ? <CiDark /> : <CiLight />}</ThemeBtn>
       </HeaderContainer>
     </>
   );
