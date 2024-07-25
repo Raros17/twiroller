@@ -9,6 +9,7 @@ import passport from 'passport';
 import session from 'express-session';
 import keys from './config/keys'; 
 import { User } from './types/TwitterProfile';
+import { twitterLogin } from './scripts/twitterLogin';
 
 const app = express();
 const PORT = 8080;
@@ -92,6 +93,27 @@ app.get('/profile', async (req, res) => {
       res.status(500).send('Error fetching user profile');
   }
 });
+
+//하단 로그인 로직
+app.post('/twitter-login', async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password are required.' });
+  }
+
+  try {
+    const loginResponse = await twitterLogin(username, password);
+    if (loginResponse.success) {
+      res.status(200).json(loginResponse);
+    } else {
+      res.status(401).json({ message: loginResponse.message });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred during login.' });
+  }
+});
+
 
 
 //하단 크롤러
