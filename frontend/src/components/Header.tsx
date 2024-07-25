@@ -17,6 +17,7 @@ function Header() {
         <HeaderList>
           <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
           <StyledLink to="/">트윗 추출기</StyledLink>
+          <StyledLink to="/login">로그인</StyledLink>
           <StyledLink to="/info">간단 설명서</StyledLink>
         </HeaderList>
         <ThemeBtn onClick={toggleTheme}>{theme === "light" ? <CiDark /> : <CiLight />}</ThemeBtn>
