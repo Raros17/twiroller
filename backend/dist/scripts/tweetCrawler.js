@@ -33,8 +33,10 @@ export function tweetCrawler(url) {
                         srcList.push(img.src);
                     }
                 });
+                console.log('Transformed URLs inside evaluate:', srcList);
                 return srcList;
             });
+            console.log('Transformed Image URLs:', imgSrcs);
             yield page.waitForSelector('div[data-testid="tweetText"]', { timeout: 60000 });
             const spanText = yield page.evaluate(() => {
                 const tweetDiv = document.querySelector('div[data-testid="tweetText"]');

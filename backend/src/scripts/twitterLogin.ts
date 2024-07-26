@@ -6,21 +6,31 @@ interface LoginResponse {
   cookies?: Cookie[];
 }
 
+const launchOptions = {
+    headless: false,  
+    args: ['--no-sandbox', '--disable-setuid-sandbox']  
+  };
+
 export async function twitterLogin(username: string, password: string): Promise<LoginResponse> {
-  const browser = await puppeteer.launch({ headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+  const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
 
   try {
-    await page.goto('https://twitter.com/login', { waitUntil: 'networkidle2' });
+    await page.goto('https://x.com/i/flow/login', { waitUntil: 'networkidle2' });
 
-    await page.type('input[name="session[username_or_email]"]', username);
-    await page.type('input[name="session[password]"]', password);
+    await page.waitForSelector('input[autocomplete="username"]');
+    await page.type('input[autocomplete="username"]', username);
+    await page.click('span:contains("다음")');
+
+    await page.waitForSelector('input[autocomplete="current-password"]', { visible: true });
+
+    await page.type('input[autocomplete="current-password"]', password);
     await page.click('div[data-testid="LoginForm_Login_Button"]');
 
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
     const isLoginSuccess = await page.evaluate(() => {
-      return !!document.querySelector('a[data-testid="AppTabBar_Home_Link"]');
+      return !!document.querySelector('a[data-testid="LoginForm_Login_Button"]');
     });
 
     if (isLoginSuccess) {
