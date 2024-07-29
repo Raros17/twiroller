@@ -1,19 +1,59 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { HyperLinkInput, CrawlingBtn } from "./Home.styles";
 
 function Login() {
-  const handleTwitterLogin = () => {
-    // 트위터 로그인을 시도하는 로직 추가
-    // 예: window.location.href = '/twitter-login';
-  };
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
+  async function handleTwitterLogin() {
+    try {
+      const response = await fetch("http://localhost:8080/twitter-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      // if (response.ok) {
+      //   const data = await response.json();
+      //   sessionStorage.setItem("twitterLoginData", JSON.stringify(data));
+      //   setLoginSuccess(true);
+      //   alert("로그인에 성공하였습니다! 이제 원하는 트윗을 추출해주세요:)");
+      // } else {
+      //   alert("로그인에 실패하였습니다. 다시 시도해주세요.");
+      // }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+  }
+  const isButtonDisabled = !username || !password;
 
   return (
     <LoginContainer>
       <LoginSection>
         <LoginTitle>X(Twitter)로 로그인 하기</LoginTitle>
-        <LoginInput placeholder="트위터 아이디를 입력하세요." />
-        <LoginInput placeholder="트위터 비밀번호를 입력하세요." />
-        <LoginBtn>로그인</LoginBtn>
+        <LoginInput
+          type="text"
+          placeholder="트위터 아이디를 입력하세요."
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+        />
+        <LoginInput
+          type="password"
+          placeholder="트위터 비밀번호를 입력하세요."
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <LoginBtn onClick={handleTwitterLogin} disabled={isButtonDisabled}>
+          로그인
+        </LoginBtn>
+        {loginSuccess && <SuccessMessage>로그인에 성공했습니다!</SuccessMessage>}
       </LoginSection>
     </LoginContainer>
   );
@@ -35,7 +75,7 @@ const LoginSection = styled.section`
   min-width: 400px;
   width: 40%;
   height: 50%;
-  background-color: ${props => props.theme.modalBack};
+  background-color: ${props => props.theme.body};
   border-radius: 30px;
   display: flex;
   flex-direction: column;
@@ -53,9 +93,16 @@ const LoginTitle = styled.h2`
 
 const LoginBtn = styled(CrawlingBtn)`
   width: 200px;
+  cursor: ${props => (props.disabled ? "not-allowed" : "pointer")};
+  opacity: ${props => (props.disabled ? 0.5 : 1)};
 `;
 
 const LoginInput = styled(HyperLinkInput)`
   width: 60%;
   margin-bottom: 1rem;
+`;
+
+const SuccessMessage = styled.p`
+  color: green;
+  margin-top: 1rem;
 `;

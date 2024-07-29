@@ -20,11 +20,19 @@ export async function twitterLogin(username: string, password: string): Promise<
 
     await page.waitForSelector('input[autocomplete="username"]');
     await page.type('input[autocomplete="username"]', username);
-    await page.click('span:contains("다음")');
+
+    const buttonXPath = "//div[contains(text(), '다음')]/ancestor::button";
+    await (page as any).waitForXPath(buttonXPath, { visible: true });
+    const [button] = await (page as any).$x(buttonXPath);
+    if (button) {
+        await button.click();
+      } else {
+        throw new Error('다음 버튼을 찾을 수 없습니다.');
+      }
 
     await page.waitForSelector('input[autocomplete="current-password"]', { visible: true });
-
     await page.type('input[autocomplete="current-password"]', password);
+    
     await page.click('div[data-testid="LoginForm_Login_Button"]');
 
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
@@ -38,12 +46,12 @@ export async function twitterLogin(username: string, password: string): Promise<
       await browser.close();
       return { success: true, cookies };
     } else {
-      await browser.close();
+      //await browser.close();
       return { success: false, message: 'Login failed, please check your credentials.' };
     }
   } catch (error) {
     console.error('Error during login:', error);
-    await browser.close();
+    //await browser.close();
     return { success: false, message: 'An error occurred during login.' };
   }
 }
